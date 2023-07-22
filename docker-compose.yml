@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres:
+    build:
+      context: ./build/postgres
+      args:
+        - ID_USER:${ID_USER:-1000}
+        - ID_GROUP:${ID_GROUP:-1000}
+    volumes:
+      - 'volume-postgres:/var/lib/postgresql/data'
+    ports:
+      - '${FORWARD_DB_PORT:-5432}:5432'
+    environment:
+      PGPASSWORD: '${DB_PASSWORD:-secret}'
+      POSTGRES_DB: '${DB_DATABASE:-test}'
+      POSTGRES_USER: '${DB_USERNAME:-pguser}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+    restart: unless-stopped
+
+volumes:
+  volume-postgres:
+    driver: local
