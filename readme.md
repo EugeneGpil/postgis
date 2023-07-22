@@ -26,6 +26,10 @@ CREATE EXTENSION Postgis;
 
 ```postgresql
 SELECT ST_Distance(
+-- Здесь сначала идет longitude, а потом latitude.
+-- А в гугл, яндекс картах сначала идет latitude, потом longitude.
+-- Так на Лос Анджелес в гугл, яндекс картах указывают координаты 33.9434 -118.4079
+-- А здесь это будут координаты -118.4079 33.9434
   'SRID=4326;POINT(-118.4079 33.9434)'::geography, -- Los Angeles (LAX)
   'SRID=4326;POINT(2.5559 49.0083)'::geography     -- Paris (CDG)
   );
