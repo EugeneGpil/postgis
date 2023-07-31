@@ -1,16 +1,16 @@
 version: '3.8'
 
 services:
-  postgres:
+  postgres-15.3:
     build:
-      context: ./build/postgres
+      context: ./build/postgres15.3
       args:
-        - ID_USER:${ID_USER:-1000}
-        - ID_GROUP:${ID_GROUP:-1000}
+        - ID_USER=${ID_USER:-1000}
+        - ID_GROUP=${ID_GROUP:-1000}
     volumes:
-      - 'volume-postgres:/var/lib/postgresql/data'
+      - './volumes/postgres15.3:/var/lib/postgresql/data'
     ports:
-      - '${FORWARD_DB_PORT:-5432}:5432'
+      - '${FORWARD_DB_PORT_15_3:-5432}:5432'
     environment:
       PGPASSWORD: '${DB_PASSWORD:-secret}'
       POSTGRES_DB: '${DB_DATABASE:-test}'
@@ -18,6 +18,19 @@ services:
       POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
     restart: unless-stopped
 
-volumes:
-  volume-postgres:
-    driver: local
+  postgres-11.20:
+    build:
+      context: ./build/postgres11.20
+      args:
+        - ID_USER=${ID_USER:-1000}
+        - ID_GROUP=${ID_GROUP:-1000}
+    volumes:
+      - './volumes/postgres11:/var/lib/postgresql/data'
+    ports:
+      - '${FORWARD_DB_PORT_11:-5433}:5432'
+    environment:
+      PGPASSWORD: '${DB_PASSWORD:-secret}'
+      POSTGRES_DB: '${DB_DATABASE:-test}'
+      POSTGRES_USER: '${DB_USERNAME:-pguser}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+    restart: unless-stopped
