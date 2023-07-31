@@ -9,5 +9,9 @@ exec-15:
 	#psql -U pguser -d test
 
 exec-11:
-	docker compose exec postgres-11.20 bash
-	#psql -U pguser -d test
+	docker compose exec --user=postgres postgres-11 bash
+	# psql
+
+# CREATE DATABASE test;
+# \c test;
+# CREATE EXTENSION Postgis;
